@@ -2,7 +2,7 @@
 
 const 
   d = document,
-  makeCList = (id, user_id, cuid, comment, username, created_at) => {
+  makeCList = (id, user_id, cuid, comment, username, created_at, likes = 0) => {
     const li = d.createElement('li');
     li.id = id;
     if (user_id === cuid) {
@@ -12,7 +12,7 @@ const
         <span>投稿者: ${username}</span>
         <i class="fa-solid fa-trash-can trash"></i>
         <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>0</span>
+        <span>${likes}</span>
         `;
     } else {
       li.innerHTML = `
@@ -20,7 +20,7 @@ const
         <span>投稿日: ${created_at}</span>
         <span>投稿者: ${username}</span>
         <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>0</span>
+        <span>${likes}</span>
         `;
     }
     return li;
@@ -94,13 +94,12 @@ d.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({ comment_id: cid }),
         });
         const datas = await res.json();
-        console.log(datas);
-        // l.innerHTML = '';
-        // datas.map(data => {
-        //   const { id, cuid, comment, name, created_at } = data;
-        //   const dom = makeCList(id, user_id, cuid, comment, name, created_at);
-        //   l.prepend(dom);
-        // });
+        l.innerHTML = '';
+        datas.map(data => {
+          const { id, cuid, comment, name, likes, created_at } = data;
+          const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
+          l.prepend(dom);
+        });
       } catch (e) {
         console.error(e);
       }

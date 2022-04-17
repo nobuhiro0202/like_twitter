@@ -3,10 +3,21 @@
   require('./db.php');
   $request = json_decode(file_get_contents("php://input"), true);
   $comment_id = $request['comment_id'];
-  var_dump($comment_id);
-  $updated_sql = "update comments set l_deleted = 1 where id = {$comment_id};";
-  $dbh->query($updated_sql);
-  $sql = "select c.id, c.comment, c.user_id as cuid, u.name, c.created_at from comments c left join users u on c.user_id = u.id where c.l_deleted <> 1 order by c.created_at desc;";
+  $update_sql = "update comments set l_deleted = 1 where id = {$comment_id};";
+  $dbh->query($update_sql);
+  $update2_sql = "update comment_likes set l_deleted = 1 where comment_id = {$comment_id};";
+  $dbh->query($update2_sql);
+  $sql = "
+    select c.id, c.user_id as cuid, c.comment, u.name, count(cl.id) as likes, c.created_at
+    from comments c 
+    left join users u on c.user_id = u.id
+    left join (
+      select * from comment_likes where l_deleted <> 1
+    ) cl on c.id = cl.comment_id
+    where c.l_deleted <> 1
+    group by c.id
+    order by c.created_at desc;
+    ";
   $res = $dbh->query($sql);
   $results = $res->fetchAll();
   $json = json_encode($results, JSON_UNESCAPED_UNICODE);

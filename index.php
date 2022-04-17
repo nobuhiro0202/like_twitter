@@ -10,6 +10,7 @@
     left join (
       select * from comment_likes where l_deleted <> 1
     ) cl on c.id = cl.comment_id
+    where c.l_deleted <> 1
     group by c.id
     order by c.created_at desc;
     ";
