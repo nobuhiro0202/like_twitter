@@ -30,14 +30,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./style.css"></link>
     <script src="https://kit.fontawesome.com/3ddfae85ec.js" crossorigin="anonymous"></script>
-    <script src="./index.js"></script>
+    <script src="./js/index.js"></script>
     <title>like twitter</title>
   </head>
   <body>
     <input type="hidden" id="user_id" value=<?= $_SESSION['id'];?>>
-    <h1><?= $msg; ?></h1>
+    <h1><a href='./user_info.php'><?= $msg; ?></a></h1>
     <div>
       <label>コメント<label>
         <input type="text" name="comment" id="comment" required>
