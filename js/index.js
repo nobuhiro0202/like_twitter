@@ -59,23 +59,31 @@ d.addEventListener('DOMContentLoaded', () => {
     }
   })
   
+  
   /**コメントいいね */
-  for (let heart of hearts) {
+  for (const heart of hearts) {
     heart.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = heart.parentNode.id,
+        cid = heart.parentNode.parentNode.parentNode.id,
         count = heart.nextElementSibling;
+
       try {
-        const res = await fetch('comment_like.php', {
+        const res = await fetch('../controllers/comLike.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id, comment_id: cid }),
         });
         const data = await res.json();
-        heart.classList.remove('fa-regular');
-        heart.classList.add('fa-solid');
-        heart.setAttribute("style", "color: lightcoral");
+        if (heart.classList.contains('fa-regular')) {
+          heart.classList.remove('fa-regular');
+          heart.classList.add('fa-solid');
+          heart.setAttribute("style", "color: lightcoral");
+        } else {
+          heart.classList.remove('fa-solid');
+          heart.classList.add('fa-regular');
+          heart.removeAttribute("style");
+        }
         count.innerHTML = data[0].likes | 0;
       } catch (e) {
         console.error(e);
