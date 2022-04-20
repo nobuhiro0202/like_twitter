@@ -45,7 +45,7 @@ d.addEventListener('DOMContentLoaded', () => {
       return;
     }
     try {
-      const res = await fetch('../controllers/commentsController.php', {
+      const res = await fetch('./controllers/commentsController.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user_id: user_id, comment: c.value}),
@@ -73,7 +73,7 @@ d.addEventListener('DOMContentLoaded', () => {
         count = heart.nextElementSibling;
 
       try {
-        const res = await fetch('../controllers/comLike.php', {
+        const res = await fetch('./controllers/comLike.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id, comment_id: cid }),
