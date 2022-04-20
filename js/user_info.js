@@ -15,7 +15,9 @@ const
       </div>
       <h5 class='statement'>${comment}</h5>
       <div class="lifoot">
-        <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        <div>
+          <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        </div>
         <div class="like">
           <i class="fa-regular fa-heart heart"></i>
           <span id="count">${likes}</span>
@@ -32,11 +34,12 @@ d.addEventListener('DOMContentLoaded', () => {
     hearts = d.querySelectorAll('.heart'),
     trashs = d.querySelectorAll('.trash');
 
+  /**コメント投稿 */
   c_sm.addEventListener('click', async e => {
     e.preventDefault();
     const 
       c = d.getElementById('comment'),
-      l = d.getElementById('comment-list');
+      ul = d.getElementById('comment-list');
     if (c.value === '') {
       return;
     }
@@ -49,29 +52,41 @@ d.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       const { id, cuid, comment, name, created_at } = data[0];
       const dom = makeCList(id, user_id, cuid, comment, name, created_at);
-      l.prepend(dom);
+      if (/^投稿/.test(ul?.childNodes[1]?.innerHTML)) {
+        ul.innerHTML = '';
+      }
+      ul.prepend(dom);
       c.value = '';
     } catch (e) {
       console.error(e);
     }
   })
 
+
+  /**コメントいいね */
   for (const heart of hearts) {
     heart.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = heart.parentNode.parentNode.id,
+        cid = heart.parentNode.parentNode.parentNode.id,
         count = heart.nextElementSibling;
+
       try {
-        const res = await fetch('comment_like2.php', {
+        const res = await fetch('../controllers/comLike.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id, comment_id: cid }),
         });
         const data = await res.json();
-        heart.classList.remove('fa-regular');
-        heart.classList.add('fa-solid');
-        heart.setAttribute("style", "color: lightcoral");
+        if (heart.classList.contains('fa-regular')) {
+          heart.classList.remove('fa-regular');
+          heart.classList.add('fa-solid');
+          heart.setAttribute("style", "color: lightcoral");
+        } else {
+          heart.classList.remove('fa-solid');
+          heart.classList.add('fa-regular');
+          heart.removeAttribute("style");
+        }
         count.innerHTML = data[0].likes | 0;
       } catch (e) {
         console.error(e);
@@ -79,30 +94,24 @@ d.addEventListener('DOMContentLoaded', () => {
     })
   }
 
+
+  /**コメント削除 */
   for (const trash of trashs) {
     trash.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = trash.parentNode.parentNode.id,
-        l = d.getElementById('comment-list');
-      console.log(cid);
-      console.log(l);
-      // try {
-      //   const res = await fetch('comment_trash2.php', {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({ user_id: user_id, comment_id: cid }),
-      //   });
-      //   const datas = await res.json();
-      //   l.innerHTML = '';
-      //   datas.map(data => {
-      //     const { id, cuid, comment, name, likes, created_at } = data;
-      //     const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
-      //     l.prepend(dom);
-      //   });
-      // } catch (e) {
-      //   console.error(e);
-      // }
+        cid = trash.parentNode.parentNode.parentNode.id,
+        li = d.getElementById(`${cid}`);
+      try {
+        await fetch('../controllers/comTrash.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: user_id, comment_id: cid }),
+        });
+        li.remove();
+      } catch (e) {
+        console.error(e);
+      }
     })
   }
 })

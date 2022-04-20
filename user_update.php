@@ -1,8 +1,8 @@
 <?php
   session_start();
   require('./db/db.php');
-  $id = $_SESSION['id'];
-  $sql = "select * from users where id = {$id};";
+  $login_id = $_SESSION['id'];
+  $sql = "select * from users where id = {$login_id};";
   $res = $dbh->query($sql);
   $user = $res->fetch();
   $username = $user['name'];

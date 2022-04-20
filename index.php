@@ -1,7 +1,7 @@
 <?php
   session_start();
   require('./db/db.php');
-  $id = $_SESSION['id'];
+  $login_id = $_SESSION['id'];
   $sql = "
     select c.id, c.comment, c.user_id as cuid, u.name, count(cl.id) as likes, c.created_at
     from comments c 
@@ -15,13 +15,13 @@
     ";
   $res = $dbh->query($sql);
   $comments = $res->fetchAll();
-  $user_sql = "select * from users where id = {$id};";
+  $user_sql = "select * from users where id = {$login_id};";
   $userRes = $dbh-> query($user_sql);
   $user = $userRes-> fetch();
   $username = $user['name'];
-  $email = $user['email'];
 
-  if (!isset($id)) header('Location: ./procs/login.php');
+
+  if (!isset($login_id)) header('Location: ./procs/login.php');
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -35,7 +35,7 @@
     <title>like twitter</title>
   </head>
   <body>
-    <input type="hidden" id="user_id" value=<?= $id?>>
+    <input type="hidden" id="user_id" value=<?= $login_id?>>
     <div class="container">
       <div class="left-container">
         <h1><a href='./user_info.php'><?= $username; ?></a></h1>
@@ -46,8 +46,12 @@
         <input type="submit" id="comment-submit" value="送信">
       </div>
       <div class="main-container">
-        <ul id='comment-list' class='comment-list'>
-        <?php include('./views/commentsList.php') ?>
+        <ul id='comment-list' class='comment-list user-info'>
+          <?php if(!$comments): ?>
+              <p>投稿がありません</p>
+          <?php else: ?>
+            <?php include('./views/commentsList.php'); ?>
+          <?php endif; ?>
         </ul>
       </div>
       <div class="right-container">

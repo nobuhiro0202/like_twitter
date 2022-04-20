@@ -5,6 +5,11 @@ body {
   margin: 0;
 }
 
+h1 {
+  margin: 0;
+  padding: 0;
+}
+
 ul {
   padding: 0;
   margin: 0;
@@ -12,10 +17,14 @@ ul {
 
 .container {
   display: flex;
+  width: 100vw;
 }
 
 .left-container {
   width: 30%;
+  border-right: 1px solid #333;
+  padding-top: 20px;
+  padding-left: 20px;
 }
 
 .left-comment {
@@ -24,19 +33,24 @@ ul {
 
 .main-container {
   width: 50%;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
 }
 
 .right-container {
   display: flex;
   flex-direction: column;
+  border-left: 1px solid #333;
+}
+
+.right-container div {
+  margin-top: 30px;
+  margin-left: 12px;
 }
 
 li {
   list-style: none;
   border-bottom: 2px solid gray;
   padding-top: 10px;
+  padding-right: 10px;
 }
 
 a {
@@ -71,6 +85,12 @@ img.user-icon-pro {
 
 .fana .person {
   margin-left: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.fana .person:hover {
+  cursor: pointer;
 }
 
 .statement {
@@ -128,6 +148,7 @@ img.user-icon-pro {
   bottom: 0;
   right: 0;
   left: 38px;
+  font-weight: bold;
 }
 
 .edit-profile-btn {
@@ -137,8 +158,92 @@ img.user-icon-pro {
   border-radius: 300px;
 }
 
+.edit-profile-btn-d {
+  color: black;
+  padding: 0 8px;
+  border-radius: 300px;
+}
+
 .intro-container {
-  margin: 30px;
-  width: 100%;
+  padding: 30px;
+  width: 80%;
   height: auto;
+}
+
+.birthday {
+  margin-left: 20px;
+  color: rgb(154, 154, 154);
+  font-size: small;
+}
+
+.login-container, .signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.login-form {
+  border: 2px solid #2f363e;
+  border-radius: 5px;
+  padding: 30px 60px;
+}
+
+.signup-form {
+  border: 2px solid #2f363e;
+  border-radius: 5px;
+  padding: 30px 72px;
+}
+
+.signup-form .username {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+.login-form .email,
+.signup-form .email {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+.username-label, .email-label, .password-label {
+  margin-bottom: 10px;
+}
+
+input[name="email"] {
+  padding: 10px;
+}
+
+.login-form .password,
+.signup-form .password {
+  height: 40px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+
+input[name="password"] {
+  padding: 10px;
+}
+
+.login-form .login-btn-container,
+.signup-form .signup-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.login-btn, .signup-btn {
+  background-color: #2f363e;
+  color: white;
+  /* border: 2px solid #2f363e; */
+  padding: 10px 30px;
+  border-radius: 5px;
 }
