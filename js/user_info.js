@@ -83,26 +83,18 @@ d.addEventListener('DOMContentLoaded', () => {
     trash.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = trash.parentNode.parentNode.id,
-        l = d.getElementById('comment-list');
-      console.log(cid);
-      console.log(l);
-      // try {
-      //   const res = await fetch('comment_trash2.php', {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json' },
-      //     body: JSON.stringify({ user_id: user_id, comment_id: cid }),
-      //   });
-      //   const datas = await res.json();
-      //   l.innerHTML = '';
-      //   datas.map(data => {
-      //     const { id, cuid, comment, name, likes, created_at } = data;
-      //     const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
-      //     l.prepend(dom);
-      //   });
-      // } catch (e) {
-      //   console.error(e);
-      // }
+        cid = trash.parentNode.parentNode.parentNode.id,
+        li = d.getElementById(`${cid}`);
+      try {
+        await fetch('../controllers/comTrash.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: user_id, comment_id: cid }),
+        });
+        li.remove();
+      } catch (e) {
+        console.error(e);
+      }
     })
   }
 })

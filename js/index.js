@@ -29,10 +29,11 @@ const
 d.addEventListener('DOMContentLoaded', () => {
   const 
     c_sm = d.getElementById('comment-submit'),
-    user_id = d.getElementById('user_id').value;
-  let 
-    hearts = d.querySelectorAll('.heart'),
+    user_id = d.getElementById('user_id').value,
     trashs = d.querySelectorAll('.trash');
+
+  let 
+    hearts = d.querySelectorAll('.heart');
   
   c_sm.addEventListener('click', async e => {
     e.preventDefault();
@@ -58,6 +59,7 @@ d.addEventListener('DOMContentLoaded', () => {
     }
   })
   
+  /**コメントいいね */
   for (let heart of hearts) {
     heart.addEventListener('click', async e => {
       e.preventDefault();
@@ -81,25 +83,21 @@ d.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  for (let trash of trashs) {
+
+  /**コメント削除 */
+  for (const trash of trashs) {
     trash.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = trash.parentNode.id,
-        l = d.getElementById('comment-list');
+        cid = trash.parentNode.parentNode.parentNode.id,
+        li = d.getElementById(`${cid}`);
       try {
-        const res = await fetch('comment_trash.php', {
+        await fetch('../controllers/comTrash.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ comment_id: cid }),
+          body: JSON.stringify({ user_id: user_id, comment_id: cid }),
         });
-        const datas = await res.json();
-        l.innerHTML = '';
-        datas.map(data => {
-          const { id, cuid, comment, name, likes, created_at } = data;
-          const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
-          l.prepend(dom);
-        });
+        li.remove();
       } catch (e) {
         console.error(e);
       }

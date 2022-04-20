@@ -19,7 +19,6 @@
   $userRes = $dbh-> query($user_sql);
   $user = $userRes-> fetch();
   $username = $user['name'];
-  $email = $user['email'];
 
   if (!isset($id)) header('Location: ./procs/login.php');
 ?>
@@ -47,7 +46,7 @@
       </div>
       <div class="main-container">
         <ul id='comment-list' class='comment-list'>
-        <?php include('./views/commentsList.php') ?>
+          <?php include('./views/commentsList.php') ?>
         </ul>
       </div>
       <div class="right-container">
