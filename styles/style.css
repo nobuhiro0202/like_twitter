@@ -16,6 +16,7 @@ ul {
 
 .left-container {
   width: 30%;
+  border-right: 1px solid #333;
 }
 
 .left-comment {
@@ -24,13 +25,12 @@ ul {
 
 .main-container {
   width: 50%;
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
 }
 
 .right-container {
   display: flex;
   flex-direction: column;
+  border-left: 1px solid #333;
 }
 
 li {

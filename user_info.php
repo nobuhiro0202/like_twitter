@@ -6,7 +6,6 @@
   $res = $dbh->query($sql);
   $user = $res->fetch();
   $username = $user['name'];
-  $email = $user['email'];
   $birthday = $user['birthday'];
   $introduction = $user['introduction'];
   $us_com_sql = "
