@@ -9,7 +9,7 @@ const
       <div class="lihead">
         <div class="fana">
           <img src="./images/person-icon.png" class='user-icon'>
-          <span class='person'>${username}</span>
+          <span class='person' value=${cuid}>${username}</span>
         </div>
         <span>${created_at}</span>
       </div>

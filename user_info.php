@@ -1,8 +1,8 @@
 <?php
   session_start();
   require('./db/db.php');
-  $id = $_SESSION['id'];
-  $sql = "select * from users where id = {$id};";
+  $login_id = $_SESSION['id'];
+  $sql = "select * from users where id = {$login_id};";
   $res = $dbh->query($sql);
   $user = $res->fetch();
   $username = $user['name'];
@@ -20,7 +20,7 @@
       group by c.id
       order by c.created_at desc
       ) a 
-    where a.cuid = {$id}
+    where a.cuid = {$login_id}
     order by a.created_at desc;
     ";
   $resp = $dbh->query($us_com_sql);
@@ -38,7 +38,7 @@
   <title>プロフィール</title>
 </head>
 <body>
-<input type="hidden" id="user_id" value=<?= $id?>>
+<input type="hidden" id="user_id" value=<?= $login_id?>>
   <div class="container">
     <div class="left-container">
       <div class='left-comment'>
