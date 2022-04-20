@@ -24,7 +24,7 @@
         <input type="password" name="password" required>
       </div>
       <div class="signup-btn-container">
-        <input type="submit" value="新規登録"  class="signup-btn">
+        <input type="submit" value="新規登録" class="signup-btn">
       </div>
     </form>
     <p>すでに登録済みの方は<a href="./login.php">こちら</a></p>
