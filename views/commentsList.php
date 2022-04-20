@@ -3,7 +3,7 @@
   <div class="lihead">
     <div class="fana">
       <img src="./images/person-icon.png" class='user-icon'>
-      <span class='person'><?= $comment['name'] ?></span>
+      <span class='person' id='person' value=<?= $comment['cuid'] ?>><?= $comment['name'] ?></span>
     </div>
     <span><?= $comment['created_at'] ?></span>
   </div>

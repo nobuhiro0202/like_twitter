@@ -32,7 +32,8 @@ d.addEventListener('DOMContentLoaded', () => {
     c_sm = d.getElementById('comment-submit'),
     user_id = d.getElementById('user_id').value,
     hearts = d.querySelectorAll('.heart'),
-    trashs = d.querySelectorAll('.trash');
+    trashs = d.querySelectorAll('.trash'),
+    persons = d.querySelectorAll('.person');
   
   /**コメント投稿 */
   c_sm.addEventListener('click', async e => {
@@ -112,6 +113,25 @@ d.addEventListener('DOMContentLoaded', () => {
       } catch (e) {
         console.error(e);
       }
+    })
+  }
+
+  /**ユーザー情報画面遷移 */
+  for (const person of persons) {
+    person.addEventListener('click', async e => {
+      const
+        person_id = person.getAttribute('value'),
+        form = d.createElement('form'),
+        formField = d.createElement('input');
+      form.method = 'get';
+      form.action = '../other_user.php';
+      d.body.appendChild(form);
+
+      formField.type = 'hidden';
+      formField.name = 'person_id';
+      formField.value = person_id;
+      form.appendChild(formField);
+      form.submit();
     })
   }
 })
