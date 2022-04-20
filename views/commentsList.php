@@ -15,7 +15,20 @@
     </div>
     <?php endif;?>
     <div class="like">
-      <i class="fa-regular fa-heart heart"></i>
+      <?php 
+        $alreadyLike_sql = "
+          select * 
+          from comment_likes
+          where user_id = {$id} and comment_id = {$comment['id']} and l_deleted <> 1
+          ";
+        $temp = $dbh->query($alreadyLike_sql);
+        $alreadyLike = $temp->fetch();
+        if (!$alreadyLike): 
+      ?>
+        <i class="fa-regular fa-heart heart"></i>
+      <?php else: ?>
+        <i class="fa-solid fa-heart heart" style="color: lightcoral;"></i>
+      <?php endif; ?>
       <span id="count"><?= $comment['likes'] ?></span>
     </div>
   </div>
