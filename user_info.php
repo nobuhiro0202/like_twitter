@@ -44,8 +44,8 @@
       <div class='left-comment'>
         <label>コメント<label>
         <input type="text" name="comment" id="comment" required>
-        <input type="submit" id="comment-submit" value="送信">
       </div>
+      <input type="submit" id="comment-submit" value="送信">
     </div>
     <div class="main-container">
       <div class="profile">
@@ -60,16 +60,20 @@
         <div class='intro-container'>
           <?= $introduction ?>
         </div>
-        <div>
+        <div class='birthday'>
           <?php 
             if ($birthday !== null) {
-              echo $birthday;
+              echo "誕生日: {$birthday}";
             }
           ?>
         </div>
       </div>
       <ul id='comment-list' class='comment-list user-info'>
-        <?php include('./views/commentsList.php') ?>
+        <?php if(!$comments): ?>
+            <p>投稿がありません</p>
+        <?php else: ?>
+            <?php include('./views/commentsList.php'); ?>
+        <?php endif; ?>
       </ul>
     </div>
     <div class="right-container">

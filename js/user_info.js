@@ -15,7 +15,9 @@ const
       </div>
       <h5 class='statement'>${comment}</h5>
       <div class="lifoot">
-        <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        <div>
+          <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        </div>
         <div class="like">
           <i class="fa-regular fa-heart heart"></i>
           <span id="count">${likes}</span>
@@ -36,7 +38,7 @@ d.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const 
       c = d.getElementById('comment'),
-      l = d.getElementById('comment-list');
+      ul = d.getElementById('comment-list');
     if (c.value === '') {
       return;
     }
@@ -49,7 +51,10 @@ d.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       const { id, cuid, comment, name, created_at } = data[0];
       const dom = makeCList(id, user_id, cuid, comment, name, created_at);
-      l.prepend(dom);
+      if (/^投稿/.test(ul?.childNodes[1]?.innerHTML)) {
+        ul.innerHTML = '';
+      }
+      ul.prepend(dom);
       c.value = '';
     } catch (e) {
       console.error(e);
