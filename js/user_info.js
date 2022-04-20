@@ -5,35 +5,33 @@ const
   makeCList = (id, user_id, cuid, comment, username, created_at, likes = 0) => {
     const li = d.createElement('li');
     li.id = id;
-    if (user_id === cuid) {
-      li.innerHTML = `
-        <h2>${comment}</h2>
-        <span>投稿日: ${created_at}</span>
-        <span>投稿者: ${username}</span>
-        <i class="fa-solid fa-trash-can trash"></i>
-        <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>${likes}</span>
-        `;
-    } else {
-      li.innerHTML = `
-        <h2>${comment}</h2>
-        <span>投稿日: ${created_at}</span>
-        <span>投稿者: ${username}</span>
-        <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>${likes}</span>
-        `;
-    }
+    li.innerHTML = `
+      <div class="lihead">
+        <div class="fana">
+          <img src="./images/person-icon.png" class='user-icon'>
+          <span class='person'>${username}</span>
+        </div>
+        <span>${created_at}</span>
+      </div>
+      <h5 class='statement'>${comment}</h5>
+      <div class="lifoot">
+        <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        <div class="like" id=${id}>
+          <i class="fa-regular fa-heart heart"></i>
+          <span id="count">${likes}</span>
+        </div>
+      </div>
+      `;
     return li;
   };
 
 d.addEventListener('DOMContentLoaded', () => {
   const 
+    user_id = d.getElementById('user_id').value,
     c_sm = d.getElementById('comment-submit'),
-    user_id = d.getElementById('user_id').value;
-  let 
     hearts = d.querySelectorAll('.heart'),
     trashs = d.querySelectorAll('.trash');
-  
+
   c_sm.addEventListener('click', async e => {
     e.preventDefault();
     const 
@@ -57,15 +55,15 @@ d.addEventListener('DOMContentLoaded', () => {
       console.error(e);
     }
   })
-  
-  for (let heart of hearts) {
+
+  for (const heart of hearts) {
     heart.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = heart.parentNode.id,
+        cid = heart.parentNode.parentNode.id,
         count = heart.nextElementSibling;
       try {
-        const res = await fetch('comment_like.php', {
+        const res = await fetch('comment_like2.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id, comment_id: cid }),
@@ -81,14 +79,16 @@ d.addEventListener('DOMContentLoaded', () => {
     })
   }
 
-  for (let trash of trashs) {
+  for (const trash of trashs) {
     trash.addEventListener('click', async e => {
       e.preventDefault();
       const 
-        cid = trash.parentNode.id,
+        cid = trash.parentNode.parentNode.id,
         l = d.getElementById('comment-list');
+      
+      console.log(cid);
       try {
-        const res = await fetch('comment_trash.php', {
+        const res = await fetch('comment_trash2.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ comment_id: cid }),

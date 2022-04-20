@@ -9,6 +9,23 @@
   $email = $user['email'];
   $birthday = $user['birthday'];
   $introduction = $user['introduction'];
+  $us_com_sql = "
+    select * from (
+      select c.id, c.comment, c.user_id as cuid, u.name, count(cl.id) as likes, c.created_at
+      from comments c 
+      left join users u on c.user_id = u.id
+      left join (
+        select * from comment_likes where l_deleted <> 1
+        ) cl on c.id = cl.comment_id
+      where c.l_deleted <> 1
+      group by c.id
+      order by c.created_at desc
+      ) a 
+    where a.cuid = {$id}
+    order by a.created_at desc;
+    ";
+  $resp = $dbh->query($us_com_sql);
+  $comments = $resp->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="">
@@ -16,32 +33,50 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/3ddfae85ec.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./style.css">
+  <script src="./js/user_info.js"></script>
   <title>プロフィール</title>
 </head>
 <body>
-  <h1>プロフィール</h1>
+<input type="hidden" id="user_id" value=<?= $id?>>
   <div class="container">
-    <a href="./user_update.php">編集する</a>
-    <img src="./images/person-icon.png" class='user-icon'>
-    <p>名前</p>
-    <div><?= $username?></div>
-    <p>メールアドレス</p>
-    <div><?= $email?></div>
-    <p>生年月日</p>
-    <div>
-    <?php 
-      if ($birthday === null) {
-        echo '未設定';
-      } else {
-        echo $birthday;
-      }
-    ?>
+    <div class="left-container">
+      <div class='left-comment'>
+        <label>コメント<label>
+        <input type="text" name="comment" id="comment" required>
+        <input type="submit" id="comment-submit" value="送信">
+      </div>
     </div>
-    <p>自己紹介</p>
-    <div><?= $introduction ?></div>
+    <div class="main-container">
+      <div class="profile">
+        <div class="profile-header"></div>
+        <div class="una">
+          <div class="ifo">
+            <img src="./images/person-icon.png" class='user-icon-pro'>
+            <div class='unarea'><?= $username?></div>
+          </div>
+          <a href="./user_update.php" class='edit-profile-btn'>編集する</a>
+        </div>
+        <div class='intro-container'>
+          <?= $introduction ?>
+        </div>
+        <div>
+          <?php 
+            if ($birthday !== null) {
+              echo $birthday;
+            }
+          ?>
+        </div>
+      </div>
+      <ul id='comment-list' class='comment-list user-info'>
+        <?php include('./commentsList.php') ?>
+      </ul>
+    </div>
+    <div class="right-container">
+      <div><a href="./index.php">ホームへ</a></div>
+      <div><a href="./procs/logout.php">ログアウト</a></div>
+    </div>
   </div>
-  <a href="./index.php">ホームへ</a>
-  <a href="./procs/logout.php">ログアウト</a>
 </body>
 </html>

@@ -3,8 +3,8 @@
   require('./db.php');
   $id = $_SESSION['id'];
   $sql = "
-  select c.id, c.comment, c.user_id as cuid, u.name, count(cl.id) as likes, c.created_at
-  from comments c 
+    select c.id, c.comment, c.user_id as cuid, u.name, count(cl.id) as likes, c.created_at
+    from comments c 
     left join users u on c.user_id = u.id
     left join (
       select * from comment_likes where l_deleted <> 1
@@ -21,14 +21,8 @@
   $username = $user['name'];
   $email = $user['email'];
 
-  if (isset($id)) {
-      $msg = htmlspecialchars($username, \ENT_QUOTES, 'UTF-8');
-      
-  } else {
-      header('Location: ./procs/login.php');
-  }
+  if (!isset($id)) header('Location: ./procs/login.php');
 ?>
-<!-- select *, EXISTS(SELECT * FROM comment_likes WHERE user_id = 2) liked from comment_likes where l_deleted <> 1; -->
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -43,40 +37,22 @@
   <body>
     <input type="hidden" id="user_id" value=<?= $id?>>
     <div class="container">
-    <div class="left-container">
-      <h1><a href='./user_info.php'><?= $msg; ?></a></h1>
-      <div>
-        <label>コメント<label>
-        <input type="text" name="comment" id="comment" required>
+      <div class="left-container">
+        <h1><a href='./user_info.php'><?= $username; ?></a></h1>
+        <div class='left-comment'>
+          <label>コメント<label>
+          <input type="text" name="comment" id="comment" required>
+        </div>
+        <input type="submit" id="comment-submit" value="送信">
       </div>
-      <input type="submit" id="comment-submit" value="送信">
-    </div>
-    <div class="main-container">
-      <ul id='comment-list' class='comment-list'>
-      <?php foreach ($comments as $comment): ?> 
-        <li id=<?= $comment['id']?>>
-          <div class="lihead">
-            <div class="fana">
-              <img src="./images/person-icon.png" class='user-icon'>
-              <span class='person'><?= $comment['name'] ?></span>
-            </div>
-            <span><?= $comment['created_at'] ?></span>
-          </div>
-          <h5 class='statement'><?= $comment['comment'] ?></h5>
-          <div class="lifoot">
-          <?php if ($id === $comment['cuid']): ?>
-            <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
-          <?php endif;?>
-          <div class="like">
-            <i class="fa-regular fa-heart heart"></i>
-            <span id="count"><?= $comment['likes'] ?></span>
-          </div>
-          </div>
-        </li>
-      <?php endforeach; ?>
-      </ul>
-    </div>
-    
+      <div class="main-container">
+        <ul id='comment-list' class='comment-list'>
+        <?php include('./commentsList.php') ?>
+        </ul>
+      </div>
+      <div class="right-container">
+        <div><a href="./procs/logout.php">ログアウト</a></div>
+      </div>
     </div>
   </body>
 </html>
