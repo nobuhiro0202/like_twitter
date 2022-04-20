@@ -16,7 +16,7 @@ const
       <h5 class='statement'>${comment}</h5>
       <div class="lifoot">
         <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
-        <div class="like" id=${id}>
+        <div class="like">
           <i class="fa-regular fa-heart heart"></i>
           <span id="count">${likes}</span>
         </div>
@@ -41,7 +41,7 @@ d.addEventListener('DOMContentLoaded', () => {
       return;
     }
     try {
-      const res = await fetch('commentsController.php', {
+      const res = await fetch('../controllers/commentsController.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user_id: user_id, comment: c.value}),
@@ -85,24 +85,24 @@ d.addEventListener('DOMContentLoaded', () => {
       const 
         cid = trash.parentNode.parentNode.id,
         l = d.getElementById('comment-list');
-      
       console.log(cid);
-      try {
-        const res = await fetch('comment_trash2.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ comment_id: cid }),
-        });
-        const datas = await res.json();
-        l.innerHTML = '';
-        datas.map(data => {
-          const { id, cuid, comment, name, likes, created_at } = data;
-          const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
-          l.prepend(dom);
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      console.log(l);
+      // try {
+      //   const res = await fetch('comment_trash2.php', {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ user_id: user_id, comment_id: cid }),
+      //   });
+      //   const datas = await res.json();
+      //   l.innerHTML = '';
+      //   datas.map(data => {
+      //     const { id, cuid, comment, name, likes, created_at } = data;
+      //     const dom = makeCList(id, user_id, cuid, comment, name, created_at, likes);
+      //     l.prepend(dom);
+      //   });
+      // } catch (e) {
+      //   console.error(e);
+      // }
     })
   }
 })

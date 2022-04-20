@@ -43,7 +43,7 @@ d.addEventListener('DOMContentLoaded', () => {
       return;
     }
     try {
-      const res = await fetch('commentsController.php', {
+      const res = await fetch('../controllers/commentsController.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user_id: user_id, comment: c.value}),

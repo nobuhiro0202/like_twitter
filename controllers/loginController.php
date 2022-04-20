@@ -1,5 +1,5 @@
 <?php
-  require('../db.php');
+  require('../db/db.php');
   session_start();
   $email = $_POST['email'];
   $res = $dbh->query("select * from users where email = '{$email}';");
@@ -10,5 +10,5 @@
     $_SESSION['email'] = $member['email'];
     header('Location: ../index.php');
   } else {
-    header('Location: ./login.php');
+    header('Location: ../procs/login.php');
   }

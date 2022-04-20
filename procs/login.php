@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>ログインページ</h1>
-  <form action="./loginController.php" method="post">
+  <form action="../controllers/loginController.php" method="post">
     <div>
       <label>メールアドレス：<label>
       <input type="text" name="email" required>
