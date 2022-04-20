@@ -161,3 +161,75 @@ img.user-icon-pro {
   color: rgb(154, 154, 154);
   font-size: small;
 }
+
+.login-container, .signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.login-form {
+  border: 2px solid #2f363e;
+  border-radius: 5px;
+  padding: 30px 60px;
+}
+
+.signup-form {
+  border: 2px solid #2f363e;
+  border-radius: 5px;
+  padding: 30px 72px;
+}
+
+.signup-form .username {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+.login-form .email,
+.signup-form .email {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+.username-label, .email-label, .password-label {
+  margin-bottom: 10px;
+}
+
+input[name="email"] {
+  padding: 10px;
+}
+
+.login-form .password,
+.signup-form .password {
+  height: 40px;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+}
+
+
+input[name="password"] {
+  padding: 10px;
+}
+
+.login-form .login-btn-container,
+.signup-form .signup-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.login-btn, .signup-btn {
+  background-color: #2f363e;
+  color: white;
+  /* border: 2px solid #2f363e; */
+  padding: 10px 30px;
+  border-radius: 5px;
+}
