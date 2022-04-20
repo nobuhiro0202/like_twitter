@@ -104,7 +104,7 @@ d.addEventListener('DOMContentLoaded', () => {
         cid = trash.parentNode.parentNode.parentNode.id,
         li = d.getElementById(`${cid}`);
       try {
-        await fetch('../controllers/comTrash.php', {
+        await fetch('./controllers/comTrash.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ user_id: user_id, comment_id: cid }),
