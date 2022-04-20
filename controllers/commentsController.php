@@ -1,6 +1,6 @@
 <?php
   ini_set('display_errors',1);
-  require('./db.php');
+  require('../db/db.php');
   $request = json_decode(file_get_contents("php://input"), true);
   $user_id = $request['user_id'];
   $comment = $request['comment'];

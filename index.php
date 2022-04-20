@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require('./db.php');
+  require('./db/db.php');
   $id = $_SESSION['id'];
   $sql = "
     select c.id, c.comment, c.user_id as cuid, u.name, count(cl.id) as likes, c.created_at
@@ -29,7 +29,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/style.css">
     <script src="https://kit.fontawesome.com/3ddfae85ec.js" crossorigin="anonymous"></script>
     <script src="./js/index.js"></script>
     <title>like twitter</title>
@@ -47,7 +47,7 @@
       </div>
       <div class="main-container">
         <ul id='comment-list' class='comment-list'>
-        <?php include('./commentsList.php') ?>
+        <?php include('./views/commentsList.php') ?>
         </ul>
       </div>
       <div class="right-container">

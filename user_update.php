@@ -1,6 +1,6 @@
 <?php
   session_start();
-  require('./db.php');
+  require('./db/db.php');
   $id = $_SESSION['id'];
   $sql = "select * from users where id = {$id};";
   $res = $dbh->query($sql);
@@ -21,7 +21,7 @@
 <body>
   <h1>プロフィール</h1>
   <button onClick="history.back();">キャンセル</button>
-  <form action="./userController.php" method='post'>
+  <form action="./controllers/userController.php" method='post'>
     <p>名前</p>
     <input type="text" name='username' value=<?= $username?> />
     <p>メールアドレス</p>

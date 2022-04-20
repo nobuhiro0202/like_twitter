@@ -9,8 +9,8 @@
 <body>
   <?php
     session_start();
-    $_SESSION = array();//セッションの中身をすべて削除
-    session_destroy();//セッションを破壊
+    $_SESSION = array();
+    session_destroy();
     header('Location: ./login.php');
   ?>
 

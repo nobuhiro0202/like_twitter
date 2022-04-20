@@ -39,10 +39,6 @@ li {
   padding-top: 10px;
 }
 
-ul.comment-list li:last-child {
-  border-bottom: none;
-}
-
 a {
   text-decoration: none;
 }

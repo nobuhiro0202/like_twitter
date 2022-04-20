@@ -1,5 +1,5 @@
 <?php
-  require('./db.php');
+  require('../db/db.php');
   session_start();
   $id = $_SESSION['id'];
   $username = $_POST['username'];
@@ -9,4 +9,4 @@
   $update_sql = "update users set name = '{$username}', email = '{$email}', birthday = '{$birthday}', introduction = '{$introduction}' where id = {$id};";
   print $update_sql;
   $dbh->query($update_sql);
-  header('Location: ./user_info.php');
+  header('Location: ../user_info.php');
