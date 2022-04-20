@@ -20,7 +20,6 @@
   $user = $userRes-> fetch();
   $username = $user['name'];
 
-
   if (!isset($login_id)) header('Location: ./procs/login.php');
 ?>
 <!DOCTYPE html>

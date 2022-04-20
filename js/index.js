@@ -124,7 +124,7 @@ d.addEventListener('DOMContentLoaded', () => {
         form = d.createElement('form'),
         formField = d.createElement('input');
       form.method = 'get';
-      form.action = '../other_user.php';
+      form.action = './other_user.php';
       d.body.appendChild(form);
 
       formField.type = 'hidden';
