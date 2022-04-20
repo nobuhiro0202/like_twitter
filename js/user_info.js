@@ -34,6 +34,7 @@ d.addEventListener('DOMContentLoaded', () => {
     hearts = d.querySelectorAll('.heart'),
     trashs = d.querySelectorAll('.trash');
 
+  /**コメント投稿 */
   c_sm.addEventListener('click', async e => {
     e.preventDefault();
     const 

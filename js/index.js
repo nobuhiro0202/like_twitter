@@ -5,24 +5,25 @@ const
   makeCList = (id, user_id, cuid, comment, username, created_at, likes = 0) => {
     const li = d.createElement('li');
     li.id = id;
-    if (user_id === cuid) {
-      li.innerHTML = `
-        <h2>${comment}</h2>
-        <span>投稿日: ${created_at}</span>
-        <span>投稿者: ${username}</span>
-        <i class="fa-solid fa-trash-can trash"></i>
-        <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>${likes}</span>
-        `;
-    } else {
-      li.innerHTML = `
-        <h2>${comment}</h2>
-        <span>投稿日: ${created_at}</span>
-        <span>投稿者: ${username}</span>
-        <i class="fa-regular fa-heart heart" id="like"></i>
-        <span>${likes}</span>
-        `;
-    }
+    li.innerHTML = `
+      <div class="lihead">
+        <div class="fana">
+          <img src="./images/person-icon.png" class='user-icon'>
+          <span class='person'>${username}</span>
+        </div>
+        <span>${created_at}</span>
+      </div>
+      <h5 class='statement'>${comment}</h5>
+      <div class="lifoot">
+        <div>
+          <i class="fa-solid fa-trash-can trash" style='color: red;'></i>
+        </div>
+        <div class="like">
+          <i class="fa-regular fa-heart heart"></i>
+          <span id="count">${likes}</span>
+        </div>
+      </div>
+      `;
     return li;
   };
 
@@ -30,16 +31,15 @@ d.addEventListener('DOMContentLoaded', () => {
   const 
     c_sm = d.getElementById('comment-submit'),
     user_id = d.getElementById('user_id').value,
+    hearts = d.querySelectorAll('.heart'),
     trashs = d.querySelectorAll('.trash');
-
-  let 
-    hearts = d.querySelectorAll('.heart');
   
+  /**コメント投稿 */
   c_sm.addEventListener('click', async e => {
     e.preventDefault();
     const 
       c = d.getElementById('comment'),
-      l = d.getElementById('comment-list');
+      ul = d.getElementById('comment-list');
     if (c.value === '') {
       return;
     }
@@ -52,7 +52,10 @@ d.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       const { id, cuid, comment, name, created_at } = data[0];
       const dom = makeCList(id, user_id, cuid, comment, name, created_at);
-      l.prepend(dom);
+      if (/^投稿/.test(ul?.childNodes[1]?.innerHTML)) {
+        ul.innerHTML = '';
+      }
+      ul.prepend(dom);
       c.value = '';
     } catch (e) {
       console.error(e);
