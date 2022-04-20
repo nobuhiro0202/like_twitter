@@ -50,6 +50,7 @@ li {
   list-style: none;
   border-bottom: 2px solid gray;
   padding-top: 10px;
+  padding-right: 10px;
 }
 
 a {
@@ -84,6 +85,12 @@ img.user-icon-pro {
 
 .fana .person {
   margin-left: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.fana .person:hover {
+  cursor: pointer;
 }
 
 .statement {
@@ -141,6 +148,7 @@ img.user-icon-pro {
   bottom: 0;
   right: 0;
   left: 38px;
+  font-weight: bold;
 }
 
 .edit-profile-btn {
@@ -150,9 +158,15 @@ img.user-icon-pro {
   border-radius: 300px;
 }
 
+.edit-profile-btn-d {
+  color: black;
+  padding: 0 8px;
+  border-radius: 300px;
+}
+
 .intro-container {
-  margin: 30px;
-  width: 100%;
+  padding: 30px;
+  width: 80%;
   height: auto;
 }
 

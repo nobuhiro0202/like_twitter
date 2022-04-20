@@ -1,8 +1,10 @@
-<?php
+<?php 
   session_start();
   require('./db/db.php');
   $login_id = $_SESSION['id'];
-  $sql = "select * from users where id = {$login_id};";
+  $person_id = $_GET['person_id'];
+  if ($person_id == $login_id) header('Location: ./user_info.php');
+  $sql = "select * from users where id = {$person_id};";
   $res = $dbh->query($sql);
   $user = $res->fetch();
   $username = $user['name'];
@@ -20,14 +22,15 @@
       group by c.id
       order by c.created_at desc
       ) a 
-    where a.cuid = {$login_id}
+    where a.cuid = {$person_id}
     order by a.created_at desc;
     ";
   $resp = $dbh->query($us_com_sql);
   $comments = $resp->fetchAll();
 ?>
+
 <!DOCTYPE html>
-<html lang="">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,7 +41,7 @@
   <title>プロフィール</title>
 </head>
 <body>
-<input type="hidden" id="user_id" value=<?= $login_id?>>
+  <input type="hidden" id="user_id" value=<?= $login_id?>>
   <div class="container">
     <div class="left-container">
       <div class='left-comment'>
@@ -55,7 +58,7 @@
             <img src="./images/person-icon.png" class='user-icon-pro'>
             <div class='unarea'><?= $username?></div>
           </div>
-          <a href="./user_update.php" class='edit-profile-btn'>編集する</a>
+          <a class='edit-profile-btn-d' style='cursor: none;'>　　　　</a>
         </div>
         <div class='intro-container'>
           <?= $introduction ?>
