@@ -16,32 +16,25 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./style.css">
   <title>プロフィール</title>
 </head>
 <body>
   <h1>プロフィール</h1>
-  <div class="container">
-    <a href="./user_update.php">編集する</a>
-    <img src="./images/person-icon.png" class='user-icon'>
+  <button onClick="history.back();">キャンセル</button>
+  <form action="./userController.php" method='post'>
     <p>名前</p>
-    <div><?= $username?></div>
+    <input type="text" name='username' value=<?= $username?> />
     <p>メールアドレス</p>
-    <div><?= $email?></div>
+    <input type="email" name='email' value=<?= $email?> />
     <p>生年月日</p>
-    <div>
-    <?php 
-      if ($birthday === null) {
-        echo '未設定';
-      } else {
-        echo $birthday;
-      }
-    ?>
-    </div>
+    <?php if ($birthday === null): ?>
+      <input type="date" name='birthday' />
+      <?php else: ?>
+        <input type="date" value=<?= $birthday ?> name='birthday' />
+    <?php endif; ?>
     <p>自己紹介</p>
-    <div><?= $introduction ?></div>
-  </div>
-  <a href="./index.php">ホームへ</a>
-  <a href="./procs/logout.php">ログアウト</a>
+    <textarea name="introduction" id="introduction" cols="30" rows="10"><?= $introduction ?></textarea>
+    <input type="submit" value="保存する">
+  </form>
 </body>
 </html>

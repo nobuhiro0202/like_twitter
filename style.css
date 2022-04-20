@@ -1,0 +1,66 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+}
+
+.left-container {
+  height: 100vh;
+  width: 20%;
+  border-right: 1px solid #333;
+}
+
+.main-container {
+  width: 50%;
+  border-right: 1px solid #333;
+}
+
+li {
+  list-style: none;
+  border-bottom: 2px solid gray;
+  padding-top: 10px;
+}
+
+.lihead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fana {
+  display: flex;
+  align-items: center;
+}
+
+img.user-icon {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.fana .person {
+  margin-left: 10px;
+}
+
+.statement {
+  margin-left: 50px;
+}
+
+.lifoot {
+  display: flex;
+  justify-content: end;
+}
+
+.lifoot .trash {
+  margin-right: 10px;
+}
+
+.lifoot .like {
+  margin-right: 10px;
+}
