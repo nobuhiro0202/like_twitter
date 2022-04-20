@@ -46,8 +46,12 @@
         <input type="submit" id="comment-submit" value="送信">
       </div>
       <div class="main-container">
-        <ul id='comment-list' class='comment-list'>
-          <?php include('./views/commentsList.php') ?>
+        <ul id='comment-list' class='comment-list user-info'>
+          <?php if(!$comments): ?>
+              <p>投稿がありません</p>
+          <?php else: ?>
+            <?php include('./views/commentsList.php'); ?>
+          <?php endif; ?>
         </ul>
       </div>
       <div class="right-container">
